@@ -1,0 +1,91 @@
+{
+  "name": "@power-cms/power-cms",
+  "version": "0.1.0",
+  "description": "PowerCms - Main package",
+  "repository": "https://github.com/power-cms/power-cms",
+  "scripts": {
+    "dev": "nodemon --ext ts --exec 'node --inspect=0.0.0.0 -r ts-node/register ./node_modules/.bin/moleculer-runner --env --config src/moleculer.config.ts src/services/*'",
+    "start": "moleculer-runner --config dist/src/moleculer.config.js dist/src/services",
+    "test": "jest --coverage --runInBand --forceExit --detectOpenHandles",
+    "coveralls": "jest --coverage --runInBand --forceExit --detectOpenHandles --coverageReporters=text-lcov | coveralls",
+    "type-check": "tsc --noEmit",
+    "build": "tsc",
+    "lint": "tslint -c tslint.json --project .",
+    "lint-fix": "tslint -c tslint.json --project . --fix",
+    "seeds": "ts-node ./node_modules/.bin/moleculer-runner --env --config src/moleculer.config.ts src/seeds/*"
+  },
+  "author": {
+    "name": "Szymon Piecuch",
+    "email": "szymek.piecuch@gmail.com"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@power-cms/auth-service": "^0.1.0",
+    "@power-cms/common": "^0.4.1",
+    "@power-cms/site-service": "^0.1.0",
+    "@power-cms/user-service": "^0.1.0",
+    "dotenv": "^6.2.0",
+    "joi": "^14.3.0",
+    "moleculer": "^0.13.0",
+    "moleculer-web": "^0.8.0",
+    "nats": "^1.0.0",
+    "pluralize": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/bluebird": "^3.5.23",
+    "@types/jest": "^23.3.5",
+    "@types/joi": "^13.6.0",
+    "@types/node": "^10.9.2",
+    "@types/pluralize": "0.0.29",
+    "coveralls": "^3.0.2",
+    "husky": "^1.2.1",
+    "jest": "^23.3.0",
+    "lint-staged": "^8.1.0",
+    "moleculer-repl": "^0.5.0",
+    "nodemon": "^1.18.9",
+    "prettier": "1.15.3",
+    "ts-jest": "^23.10.3",
+    "ts-lint": "^4.5.1",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-sonarts": "^1.8.0",
+    "typescript": "^3.1.1"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/**/index.ts"
+    ],
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "testRegex": "\\.(test|spec)\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.test.json"
+      }
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm run type-check"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run lint-fix",
+      "prettier --write",
+      "git add"
+    ]
+  }
+}

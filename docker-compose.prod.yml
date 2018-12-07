@@ -1,0 +1,89 @@
+version: "3.4"
+
+services:
+
+  api:
+    build:
+      context: .
+      target: prod
+    image: power-cms
+    env_file: .env
+    environment:
+      SERVICES: api
+    networks:
+      - power-cms
+    depends_on:
+      - nats
+      - mongodb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=api"
+      - "traefik.port=3000"
+      - "traefik.frontend.entryPoints=http"
+      - "traefik.frontend.rule=PathPrefix:/"
+
+  site:
+    build:
+      context: .
+      target: prod
+    image: power-cms
+    env_file: .env
+    environment:
+      SERVICES: site
+    networks:
+      - power-cms
+    depends_on:
+      - nats
+      - mongodb
+
+  user:
+    build:
+      context: .
+      target: prod
+    image: power-cms
+    env_file: .env
+    environment:
+      SERVICES: user
+    networks:
+      - power-cms
+    depends_on:
+      - nats
+      - mongodb
+
+  auth:
+    build:
+      context: .
+      target: prod
+    image: power-cms
+    env_file: .env
+    environment:
+      SERVICES: auth
+    networks:
+      - power-cms
+    depends_on:
+      - nats
+      - mongodb
+
+  mongodb:
+    image: mongo:4
+    networks:
+      - power-cms
+
+  nats:
+    image: nats
+    networks:
+      - power-cms
+
+  traefik:
+    image: traefik
+    command: --web --docker --docker.domain=docker.localhost --logLevel=INFO --docker.exposedbydefault=false
+    networks:
+      - power-cms
+    ports:
+      - "4001:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /dev/null:/traefik.toml
+
+networks:
+  power-cms:

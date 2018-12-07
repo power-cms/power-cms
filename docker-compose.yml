@@ -1,0 +1,62 @@
+version: "3.4"
+
+services:
+
+  services:
+    build:
+      context: .
+      target: dev
+    env_file: .env
+    image: power-cms
+    networks:
+      - power-cms
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    depends_on:
+      - nats
+      - mongodb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=api"
+      - "traefik.port=3000"
+      - "traefik.frontend.entryPoints=http"
+      - "traefik.frontend.rule=PathPrefix:/"
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  mongodb:
+    image: mongo:4
+    networks:
+      - power-cms
+
+  mongo-express:
+    image: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    networks:
+      - power-cms
+    depends_on:
+      - mongodb
+    ports:
+      - "8081:8081"
+
+  nats:
+    image: nats
+    networks:
+      - power-cms
+
+  traefik:
+    image: traefik
+    command: --web --docker --docker.domain=docker.localhost --logLevel=INFO --docker.exposedbydefault=false
+    networks:
+      - power-cms
+    ports:
+      - "4001:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /dev/null:/traefik.toml
+
+networks:
+  power-cms:
