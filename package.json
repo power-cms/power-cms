@@ -40,13 +40,16 @@
     "@types/joi": "^13.6.0",
     "@types/node": "^10.9.2",
     "@types/pluralize": "0.0.29",
+    "@types/supertest": "^2.0.7",
     "coveralls": "^3.0.2",
     "husky": "^1.2.1",
     "jest": "^23.3.0",
     "lint-staged": "^8.1.0",
     "moleculer-repl": "^0.5.0",
+    "mongodb-memory-server": "^3.0.0",
     "nodemon": "^1.18.9",
     "prettier": "1.15.3",
+    "supertest": "^3.4.1",
     "ts-jest": "^23.10.3",
     "ts-lint": "^4.5.1",
     "ts-node": "^7.0.1",
@@ -58,7 +61,8 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.ts",
-      "!src/**/index.ts"
+      "!src/**/index.ts",
+      "!src/seeds/*"
     ],
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -70,6 +74,7 @@
       "json",
       "node"
     ],
+    "testEnvironment": "./jest.environment.ts",
     "globals": {
       "ts-jest": {
         "tsConfig": "tsconfig.test.json"
@@ -83,7 +88,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "npm run lint-fix",
+      "tslint --fix",
       "prettier --write",
       "git add"
     ]

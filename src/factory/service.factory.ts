@@ -12,7 +12,7 @@ const createActions = (handlers: IActionHandler[]): Actions => {
     .reduce(
       (actions: Actions, action: Action) => ({
         ...actions,
-        [action.name || '']: action,
+        [String(action.name)]: action,
       }),
       {}
     );
@@ -25,6 +25,10 @@ const createAction = (handler: IActionHandler): Action => ({
     const actionData = { data: body, params, auth: meta.auth };
 
     if (handler.authorize && !(await handler.authorize(actionData))) {
+      if (!actionData.auth) {
+        throw new Errors.MoleculerServerError('Unauthenticated', 401);
+      }
+
       throw new Errors.MoleculerServerError('Forbidden', 403);
     }
 

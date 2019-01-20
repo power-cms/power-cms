@@ -1,4 +1,4 @@
-# :rocket: PowerCms - Main package
+![PowerCms](docs/logo.png)
 
 [![Build Status](https://travis-ci.com/power-cms/power-cms.svg?branch=master)](https://travis-ci.com/power-cms/power-cms)
 [![Coverage Status](https://coveralls.io/repos/github/power-cms/power-cms/badge.svg)](https://coveralls.io/github/power-cms/power-cms)
