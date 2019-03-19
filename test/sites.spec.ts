@@ -97,6 +97,6 @@ describe('Sites flow', () => {
 
     const getResponse = await request(app).get(`/api/sites/${id}`);
 
-    expect(getResponse.status).toBe(500); //todo: should be 404
+    expect(getResponse.status).toBe(404);
   });
 });

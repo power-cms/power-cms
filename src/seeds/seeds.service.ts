@@ -27,6 +27,34 @@ class SeedsService extends Service {
       params: { id },
     });
 
+    await this.broker.call('settings.create', {
+      body: {
+        title: 'Hello World',
+      },
+    });
+
+    await this.broker.call(
+      'site.create',
+      {
+        body: {
+          title: 'Home',
+          type: 'text',
+          content: '<p>Hello world!</p>',
+          url: '/',
+        },
+      },
+      {
+        meta: {
+          auth: {
+            id,
+            username: 'Admin',
+            email: 'admin@test.com',
+            roles: ['Admin'],
+          },
+        },
+      }
+    );
+
     process.stdout.write('[Seeds] Done!\n');
     process.exit();
   }

@@ -1,10 +1,10 @@
 {
   "name": "@power-cms/power-cms",
   "version": "0.1.0",
-  "description": "PowerCms - Main package",
+  "description": "PowerCMS - Main package",
   "repository": "https://github.com/power-cms/power-cms",
   "scripts": {
-    "dev": "nodemon --ext ts --exec 'node --inspect=0.0.0.0 -r ts-node/register ./node_modules/.bin/moleculer-runner --env --config src/moleculer.config.ts src/services/*'",
+    "dev": "nodemon --ext ts --exec 'node -r ts-node/register ./node_modules/.bin/moleculer-runner --env --config src/moleculer.config.ts src/services/*'",
     "start": "moleculer-runner --config dist/src/moleculer.config.js dist/src/services",
     "test": "jest --coverage --runInBand --forceExit --detectOpenHandles",
     "coveralls": "jest --coverage --runInBand --forceExit --detectOpenHandles --coverageReporters=text-lcov | coveralls",
@@ -23,10 +23,11 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@power-cms/auth-service": "^0.1.0",
-    "@power-cms/common": "^0.4.1",
-    "@power-cms/site-service": "^0.1.0",
-    "@power-cms/user-service": "^0.1.0",
+    "@power-cms/auth-service": "^0.2.0",
+    "@power-cms/common": "^0.6.0",
+    "@power-cms/settings-service": "^0.1.1",
+    "@power-cms/site-service": "^0.2.0",
+    "@power-cms/user-service": "^0.2.0",
     "dotenv": "^6.2.0",
     "joi": "^14.3.0",
     "moleculer": "^0.13.0",

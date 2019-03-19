@@ -1,5 +1,4 @@
 import { BrokerOptions, Errors } from 'moleculer';
-import { JoiValidator } from './validation/joi.validator';
 
 // More info about options: https://moleculer.services/docs/0.13/broker.html#Broker-options
 const brokerConfig: BrokerOptions = {
@@ -55,8 +54,8 @@ const brokerConfig: BrokerOptions = {
     maxQueueSize: 100,
   },
 
-  validation: true,
-  validator: new JoiValidator(),
+  validation: false,
+  validator: undefined,
 
   metrics: false,
   metricsRate: 1,

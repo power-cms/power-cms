@@ -32,9 +32,9 @@ describe('Registration flow', () => {
       .post('/api/auth/register')
       .send({});
 
-    expect(status).toBe(422);
+    expect(status).toBe(400);
     expect(body.data.length).toBe(1);
-    expect(body.data[0].type).toBe('any.required');
+    expect(body.data[0].message).toBe('any.required');
   });
 
   it('Validates the rest in user service', async () => {
@@ -42,10 +42,8 @@ describe('Registration flow', () => {
       .post('/api/auth/register')
       .send({ password: 'P@$$word' });
 
-    expect(status).toBe(422);
-    expect(body.data.map(({ path, type }: any) => ({ path: path.join('.'), type }))).toEqual([
-      { path: 'username', type: 'any.required' },
-      { path: 'email', type: 'any.required' },
-    ]);
+    expect(status).toBe(400);
+    expect(body.data[0]).toEqual({ path: 'username', message: 'any.required' });
+    expect(body.data[1]).toEqual({ path: 'email', message: 'any.required' });
   });
 });

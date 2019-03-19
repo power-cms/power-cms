@@ -1,5 +1,6 @@
-import { IActionHandler, IService } from '@power-cms/common/application';
-import { Action, ActionParams, Actions, Context, Errors, ServiceSchema } from 'moleculer';
+import { IActionData, IActionHandler, IService } from '@power-cms/common/application';
+import { Action, Actions, Context, Errors, ServiceSchema } from 'moleculer';
+import { getErrorCode } from '../exception/exception-code.parser';
 
 export const createService = (service: IService): ServiceSchema => ({
   name: service.name,
@@ -20,22 +21,21 @@ const createActions = (handlers: IActionHandler[]): Actions => {
 
 const createAction = (handler: IActionHandler): Action => ({
   name: handler.name,
-  params: (handler.validator as any) as ActionParams,
   handler: async ({ params: { body, query, params }, meta }: Context) => {
-    const actionData = { data: body, params, auth: meta.auth };
+    const actionData: IActionData = { data: body, params, auth: meta.auth, query };
 
     if (handler.authorize && !(await handler.authorize(actionData))) {
       if (!actionData.auth) {
-        throw new Errors.MoleculerServerError('Unauthenticated', 401);
+        throw new Errors.MoleculerError('Unauthenticated', 401);
       }
 
-      throw new Errors.MoleculerServerError('Forbidden', 403);
+      throw new Errors.MoleculerError('Forbidden', 403);
     }
 
     try {
-      return await handler.handle(actionData);
+      return await handler.execute(actionData);
     } catch (e) {
-      throw e; // todo: proper application error handling
+      throw new Errors.MoleculerError(e.message, getErrorCode(e), 'ServiceError', e.details || e.data);
     }
   },
 });

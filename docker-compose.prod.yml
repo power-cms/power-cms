@@ -12,6 +12,8 @@ services:
       SERVICES: api
     networks:
       - power-cms
+    ports:
+      - "3000:3000"
     depends_on:
       - nats
       - mongodb
@@ -58,6 +60,20 @@ services:
     env_file: .env
     environment:
       SERVICES: auth
+    networks:
+      - power-cms
+    depends_on:
+      - nats
+      - mongodb
+
+  settings:
+    build:
+      context: .
+      target: prod
+    image: power-cms
+    env_file: .env
+    environment:
+      SERVICES: settings
     networks:
       - power-cms
     depends_on:

@@ -1,13 +1,18 @@
-![PowerCms](docs/logo.png)
+![PowerCMS](docs/logo.png)
 
 [![Build Status](https://travis-ci.com/power-cms/power-cms.svg?branch=master)](https://travis-ci.com/power-cms/power-cms)
 [![Coverage Status](https://coveralls.io/repos/github/power-cms/power-cms/badge.svg)](https://coveralls.io/github/power-cms/power-cms)
 
-> PowerCms is a Domain Driven, CQRS based CMS project in Microservices architecture, written for developers. Good architecture, code quality and fancy technologies will be always on the first place!
+> PowerCMS is a Domain Driven, CQRS based CMS project in Microservices architecture, written for developers. Good architecture, code quality and fancy technologies will be always on the first place!
 
 ## How to use?
 
 To be defined...
+
+To run seeds, start the server, and then run the following command:
+```bash
+docker-compose run --rm services bash -c "npm run seeds"
+```
 
 ## Packages
 

@@ -1,5 +1,6 @@
 import { createService as createAuthService } from '@power-cms/auth-service';
 import { IService } from '@power-cms/common/application';
+import { createService as createSettingsService } from '@power-cms/settings-service';
 import { createService as createSiteService } from '@power-cms/site-service';
 import { createService as createUserService } from '@power-cms/user-service';
 import { Errors, Service, ServiceBroker } from 'moleculer';
@@ -10,7 +11,7 @@ class ApiService extends Service {
   constructor(broker: ServiceBroker) {
     super(broker);
 
-    const aliases = [createSiteService(), createUserService(), createAuthService()].reduce(
+    const aliases = [createSiteService(), createUserService(), createAuthService(), createSettingsService()].reduce(
       (routing: IRouting, service: IService) => ({
         ...routing,
         ...createRouting(service),
@@ -22,6 +23,15 @@ class ApiService extends Service {
       name: 'api',
       mixins: [ApiGateway],
       settings: {
+        cors: {
+          origin: '*',
+          // Configures the Access-Control-Allow-Methods CORS header.
+          methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'DELETE'],
+          allowedHeaders: ['content-type', 'authorization'],
+          exposedHeaders: [],
+          credentials: false,
+          maxAge: 3600,
+        },
         port: process.env.PORT || 3000,
         routes: [
           {
