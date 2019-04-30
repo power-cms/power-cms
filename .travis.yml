@@ -4,3 +4,9 @@ node_js:
   - "10"
 
 after_script: npm run coveralls
+
+deploy:
+  provider: script
+  script: docker build . -t powercms/power-cms:$TRAVIS_TAG && (echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin) && docker push powercms/power-cms:$TRAVIS_TAG
+  on:
+    tags: true

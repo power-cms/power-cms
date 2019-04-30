@@ -9,6 +9,7 @@ services:
     image: power-cms
     env_file: .env
     environment:
+      SERVICEDIR: dist/services
       SERVICES: api
     networks:
       - power-cms
@@ -31,6 +32,7 @@ services:
     image: power-cms
     env_file: .env
     environment:
+      SERVICEDIR: dist/services
       SERVICES: site
     networks:
       - power-cms
@@ -45,6 +47,7 @@ services:
     image: power-cms
     env_file: .env
     environment:
+      SERVICEDIR: dist/services
       SERVICES: user
     networks:
       - power-cms
@@ -59,6 +62,7 @@ services:
     image: power-cms
     env_file: .env
     environment:
+      SERVICEDIR: dist/services
       SERVICES: auth
     networks:
       - power-cms
@@ -73,6 +77,7 @@ services:
     image: power-cms
     env_file: .env
     environment:
+      SERVICEDIR: dist/services
       SERVICES: settings
     networks:
       - power-cms

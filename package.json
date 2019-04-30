@@ -1,15 +1,15 @@
 {
   "name": "@power-cms/power-cms",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "PowerCMS - Main package",
   "repository": "https://github.com/power-cms/power-cms",
   "scripts": {
     "dev": "nodemon --ext ts --exec 'node -r ts-node/register ./node_modules/.bin/moleculer-runner --env --config src/moleculer.config.ts src/services/*'",
-    "start": "moleculer-runner --config dist/src/moleculer.config.js dist/src/services",
+    "start": "moleculer-runner --config dist/moleculer.config.js dist/services",
     "test": "jest --coverage --runInBand --forceExit --detectOpenHandles",
     "coveralls": "jest --coverage --runInBand --forceExit --detectOpenHandles --coverageReporters=text-lcov | coveralls",
     "type-check": "tsc --noEmit",
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "lint": "tslint -c tslint.json --project .",
     "lint-fix": "tslint -c tslint.json --project . --fix",
     "seeds": "ts-node ./node_modules/.bin/moleculer-runner --env --config src/moleculer.config.ts src/seeds/*"
